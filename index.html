@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodopro - Zaman Yönetimi</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/umitcancinar/PomodoPro/main/Gemini_Generated_Image_13qm1u13qm1u13qm.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <audio id="tick-sound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" preload="auto"></audio>
+    <audio id="alarm-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
+
+    <header class="top-bar">
+        <div class="logo-area">
+            <img src="https://raw.githubusercontent.com/umitcancinar/PomodoPro/main/Gemini_Generated_Image_13qm1u13qm1u13qm.png" alt="Pomodopro Logo" class="site-logo">
+        </div>
+
+        <div class="header-controls">
+            <button id="fullscreen-toggle" class="icon-btn" title="Tam Ekran">
+                <span>⛶</span>
+            </button>
+
+            <button id="sound-toggle" class="icon-btn" title="Sesi Aç/Kapat">
+                <span id="sound-icon">🔊</span>
+            </button>
+            
+            <div class="theme-switch-wrapper">
+                <span class="theme-label" id="theme-text">Dark Mode</span>
+                <label class="theme-switch" for="theme-checkbox">
+                    <input type="checkbox" id="theme-checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="pomodoro-header">
+            <div class="mode-selector">
+                <button id="mode-clock" class="mode-btn active">Saat Modu</button>
+                <button id="mode-pomodoro" class="mode-btn">Pomodoro</button>
+            </div>
+            
+            <div id="pomodoro-controls" class="hidden">
+                <button id="btn-start" class="ctrl-btn minimal-btn">Başla (Space)</button>
+                <button id="btn-pause" class="ctrl-btn minimal-btn hidden">Duraklat (Space)</button>
+                <button id="btn-reset" class="ctrl-btn minimal-btn danger-border">Sıfırla</button>
+            </div>
+
+            <h2 id="focus-display" class="hidden">Odaklanılan Hedef</h2>
+        </div>
+
+        <div class="clock-container">
+            <div class="time-section">
+                <div class="flip-card" id="hours" data-value="00">
+                    <div class="top">00</div>
+                    <div class="bottom">00</div>
+                </div>
+                <div class="label">SAAT</div>
+            </div>
+
+            <div class="time-section">
+                <div class="flip-card" id="minutes" data-value="00">
+                    <div class="top">00</div>
+                    <div class="bottom">00</div>
+                </div>
+                <div class="label">DAKİKA</div>
+            </div>
+
+            <div class="time-section">
+                <div class="flip-card" id="seconds" data-value="00">
+                    <div class="top">00</div>
+                    <div class="bottom">00</div>
+                </div>
+                <div class="label">SANİYE</div>
+            </div>
+        </div>
+    </main>
+
+    <div class="floating-wrapper">
+        <div class="fab-menu" id="fab-menu">
+            <button id="music-btn" class="fab-item">🎧 Odak Arttırıcı Müzik</button>
+            <button id="goal-btn" class="fab-item">🎯 Hedefini Gir</button>
+            <button id="note-btn" class="fab-item">📝 Not Al</button>
+        </div>
+        <button id="main-fab" class="main-fab-btn" title="Ek Özellikler">
+            <span id="fab-icon">☰</span>
+        </button>
+    </div>
+
+    <div id="music-panel" class="side-panel glass-panel">
+        <div class="panel-header">
+            <h3>Odak Arttırıcı Müzik</h3>
+            <button id="close-music-btn" class="close-btn">×</button>
+        </div>
+        <div class="spotify-wrapper">
+            <iframe 
+                style="border-radius:12px;" 
+                src="https://open.spotify.com/embed/playlist/38IfIUIZkfeaheAurDu5Cj?si=2aafeeeae8d5479b" 
+                width="100%" 
+                height="100%" 
+                frameBorder="0" 
+                allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+    <div id="note-panel" class="side-panel glass-panel">
+        <div class="panel-header">
+            <h3>Hızlı Notlar</h3>
+            <button id="close-note-btn" class="close-btn">×</button>
+        </div>
+        <textarea id="note-area" placeholder="Notlarınızı buraya yazın... (Otomatik kaydedilir)"></textarea>
+        <button id="download-word-btn" class="action-btn">
+            <span>⬇️</span> Word Olarak İndir
+        </button>
+    </div>
+
+    <div id="goal-modal" class="modal-overlay">
+        <div class="modal-content glass-panel text-center">
+            <div class="modal-header">
+                <h3>Hedefini Belirle</h3>
+                <button id="close-goal-btn" class="close-btn">×</button>
+            </div>
+            <form id="goal-form">
+                <input type="text" id="g-input" placeholder="Şu an neye odaklanıyorsun?" required autocomplete="off">
+                <button type="submit" class="submit-btn">Hedefi Ekle</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="pomodoro-modal" class="modal-overlay">
+        <div class="modal-content glass-panel text-center">
+            <div class="modal-header">
+                <h3>Pomodoro Süresi</h3>
+                <button id="close-pomodoro-btn" class="close-btn">×</button>
+            </div>
+            <form id="pomodoro-time-form">
+                <input type="number" id="p-time-input" placeholder="Kaç dakika? (Örn: 25)" min="1" max="999" required>
+                <button type="submit" class="submit-btn">Süreyi Ayarla</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="modern-footer">
+        <p class="signature-text">DESIGNED AND DEVELOPED BY ÜMİTCAN ÇINAR</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
