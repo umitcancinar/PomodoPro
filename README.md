@@ -7,8 +7,8 @@
 
 Pomodopro, "Derin Odaklanma" (Deep Work) felsefesini temel alarak geliştirilmiş, hiçbir dış kütüphane veya framework (React, Vue vb.) kullanılmadan **%100 Vanilla JavaScript, HTML5 ve CSS3** ile inşa edilmiş üst segment bir üretkenlik istasyonudur.
 
-🚀 [**Canlı Demo:**](https://pomodoprox.netlify.app)  
-🌐 [**Geliştirici Portfolyosu:**](https://umitcancinar.me)
+🚀 [**Canlı Demo**](https://pomodoprox.netlify.app)  
+🌐 [**Geliştirici Portfolyosu**](https://umitcancinar.me)
 
 ---
 
